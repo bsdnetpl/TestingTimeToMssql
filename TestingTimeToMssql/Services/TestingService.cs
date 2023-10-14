@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bogus;
+using Microsoft.EntityFrameworkCore;
 using TestingTimeToMssql.DB;
 using TestingTimeToMssql.Modules;
 
@@ -45,16 +46,16 @@ namespace TestingTimeToMssql.Services
             {
                 return editUser;
             }
-            
+
             editUser.name = user.name;
             editUser.pesel = user.pesel;
-             _ContextMssql.SaveChanges();
+            _ContextMssql.SaveChanges();
             return user;
         }
         public async Task<UserBis> EditUserBis(string name, UserBis userBis)
         {
             var editUser = await FindUserBis(name);
-            if(editUser is null)
+            if (editUser is null)
             {
                 return editUser;
             }
@@ -74,6 +75,26 @@ namespace TestingTimeToMssql.Services
         {
             var userForDel = _ContextMssql.userBis.Where(i => i.id == Id).First();
             _ContextMssql.userBis.Remove(userForDel);
+            await _ContextMssql.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> AddRangeUser(int val)
+        {
+            var fake = new Faker<User>()
+                .RuleFor(u => u.name, f => f.Name.FindName())
+                .RuleFor(u => u.pesel, f => f.Phone.PhoneNumber());
+            var res = fake.Generate(val);
+            await _ContextMssql.users.AddRangeAsync(res);
+            await _ContextMssql.SaveChangesAsync();
+            return true;
+        }
+        public async Task<bool> AddRangeUserBis(int val)
+        {
+            var fake = new Faker<UserBis>()
+                .RuleFor(u => u.name, f => f.Name.FindName())
+                .RuleFor(u => u.pesel, f => f.Phone.PhoneNumber());
+            var res = fake.Generate(val);
+            await _ContextMssql.userBis.AddRangeAsync(res);
             await _ContextMssql.SaveChangesAsync();
             return true;
         }

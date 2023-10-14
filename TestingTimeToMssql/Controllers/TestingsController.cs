@@ -28,6 +28,7 @@ namespace TestingTimeToMssql.Controllers
             await _testingService.AddBis(userBis);
             return Ok();
         }
+        
         [HttpGet("FindUser")]
         public async Task <ActionResult<User>> FindUser(string name)
         {
@@ -49,6 +50,18 @@ namespace TestingTimeToMssql.Controllers
         {
             return Ok(await _testingService.EditUserBis(name,userBis));
         }
+        [HttpPut("AddBogusDataFotUser")]
+        public async Task<IActionResult> AddBogusDataFotUser(int val)
+        {
+            await _testingService.AddRangeUser(val);
+            return Ok();
+        }
+        [HttpPut("AddBogusDataFotUserBis")]
+        public async Task<IActionResult> AddBogusDataFotUserBis(int val)
+        {
+            await _testingService.AddRangeUserBis(val);
+            return Ok();
+        }
         [HttpDelete("DeleteUser")]
         public async Task<ActionResult<bool>>DelUser(int Id)
         {
@@ -59,5 +72,6 @@ namespace TestingTimeToMssql.Controllers
         {
             return Ok(await _testingService.DeleteUserBis(Id));
         }
+        
     }
 }

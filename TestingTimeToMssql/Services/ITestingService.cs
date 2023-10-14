@@ -6,6 +6,8 @@ namespace TestingTimeToMssql.Services
     {
         Task<bool> Add(User user);
         Task<bool> AddBis(UserBis userBis);
+        Task<bool> AddRangeUser(int val);
+        Task<bool> AddRangeUserBis(int val);
         Task<bool> DeleteUser(int Id);
         Task<bool> DeleteUserBis(int Id);
         Task<User> EditUser(string name, User user);
