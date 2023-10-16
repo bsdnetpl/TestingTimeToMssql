@@ -28,20 +28,20 @@ namespace TestingTimeToMssql.Services
             await _ContextMssql.SaveChangesAsync();
             return true;
         }
-        public async Task<User> FindUser(string name)
+        public async Task<User> FindUser(string pesel)
         {
-            var userSeek = await _ContextMssql.users.FirstAsync(f => f.name == name);
+            var userSeek = await _ContextMssql.users.FirstAsync(f => f.pesel == pesel);
             return userSeek;
         }
-        public async Task<UserBis> FindUserBis(string name)
+        public async Task<UserBis> FindUserBis(string pesel)
         {
-            var userSeek = await _ContextMssql.userBis.FirstAsync(f => f.name == name);
+            var userSeek = await _ContextMssql.userBis.FirstAsync(f => f.pesel == pesel);
             return userSeek;
         }
-        public async Task<User> EditUser(string name, User user)
+        public async Task<User> EditUser(string pesel, User user)
         {
 
-            var editUser = await _ContextMssql.users.FirstOrDefaultAsync(s => s.name == name);
+            var editUser = await _ContextMssql.users.FirstOrDefaultAsync(s => s.pesel == pesel);
             if (editUser == null)
             {
                 return editUser;
@@ -52,9 +52,9 @@ namespace TestingTimeToMssql.Services
             _ContextMssql.SaveChanges();
             return user;
         }
-        public async Task<UserBis> EditUserBis(string name, UserBis userBis)
+        public async Task<UserBis> EditUserBis(string pesel, UserBis userBis)
         {
-            var editUser = await FindUserBis(name);
+            var editUser = await FindUserBis(pesel);
             if (editUser is null)
             {
                 return editUser;

@@ -30,15 +30,15 @@ namespace TestingTimeToMssql.Controllers
         }
         
         [HttpGet("FindUser")]
-        public async Task <ActionResult<User>> FindUser(string name)
+        public async Task <ActionResult<User>> FindUser(string pesel)
         {
-            var result = await _testingService.FindUser(name);
+            var result = await _testingService.FindUser(pesel);
             return Ok(result);
         }
         [HttpGet("FindUserBis")]
-        public async Task<ActionResult<User>> FindUserBis(string name)
+        public async Task<ActionResult<User>> FindUserBis(string pesel)
         {
-            return Ok(await _testingService.FindUserBis(name));
+            return Ok(await _testingService.FindUserBis(pesel));
         }
         [HttpPut("EditUser")]
         public async Task<ActionResult<User>>EditUser(string name, User user )
